@@ -22,6 +22,9 @@ export const consultations: Consultation[] = [
       "This consultation is educational and reflects traditional herbal practices. It is not medical advice, diagnosis, or treatment, and is not a substitute for care from a licensed healthcare provider. Always consult your provider before changing your wellness regimen, especially if pregnant, nursing, or taking medications.",
     bookingUrl: integrations.calendly.consultations.botanicalWellness,
     imageTheme: "sage",
+    image: "/images/kristina-altar.jpg",
+    imageAlt:
+      "Kristina seated at her botanical altar with candles and plants",
   },
   {
     slug: "ceremonial-cacao-consultation",
@@ -43,6 +46,8 @@ export const consultations: Consultation[] = [
       "Educational and rooted in cultural and traditional practices; not medical advice or therapy. Ceremonial cacao contains naturally occurring stimulants (theobromine/caffeine). Not recommended for those with certain heart conditions, who are pregnant/nursing, or taking MAOIs or other interacting medications without consulting a healthcare provider.",
     bookingUrl: integrations.calendly.consultations.ceremonialCacao,
     imageTheme: "cacao",
+    image: "/images/cacao-bowl.webp",
+    imageAlt: "Hands offering a wooden bowl of ceremonial cacao",
   },
   {
     slug: "preparation-integration-education",
@@ -64,6 +69,9 @@ export const consultations: Consultation[] = [
       "Strictly educational. This session does not provide, supply, or encourage the use of any controlled or illegal substances, and is not medical, psychological, or therapeutic advice. It is not a substitute for licensed medical or mental health care. Please consult appropriate licensed professionals for medical or mental health needs.",
     bookingUrl: integrations.calendly.consultations.preparationIntegration,
     imageTheme: "gold",
+    image: "/images/community.jpg",
+    imageAlt:
+      "A circle of people gathered for a warm cacao and wellness workshop",
   },
 ];
 

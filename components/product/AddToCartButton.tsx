@@ -1,22 +1,16 @@
 import type { Product } from "@/types";
-import { BuyButton } from "@/components/product/BuyButton";
+import { PurchaseButton } from "@/components/product/PurchaseButton";
 
-/**
- * "Add to Cart" entry point. v1 commerce is delegated to Stripe Payment Links,
- * so this resolves to the same hosted checkout as Buy Now (single-item). A
- * multi-item cart is intentionally deferred until post-revenue. Kept as a named
- * component so pages can express intent and we can swap the implementation
- * later without touching every call site.
- */
+/** v1 resolves to the same Stripe Payment Link as Buy Now. */
 export function AddToCartButton({
   product,
   size = "md",
 }: {
   product: Product;
-  size?: "sm" | "md";
+  size?: "sm" | "md" | "lg";
 }) {
   return (
-    <BuyButton
+    <PurchaseButton
       product={product}
       label="Add to Cart"
       variant="secondary"

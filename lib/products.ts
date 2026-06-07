@@ -75,6 +75,36 @@ export const products: Product[] = [
     ingestible: false,
     subscription: "monthly-save-10",
     imageTheme: "gold",
+    image: "/images/tallow-balm.jpg",
+    imageAlt: "An open tin of soft, whipped grass-fed tallow balm",
+    ritual:
+      "Apply at night as a closing ritual. Warm a small amount between your fingertips, press into slightly damp skin, and let the balm melt in while you breathe slowly. This is not a step to rush through — it is a moment of returning to your body.",
+    howToUse: [
+      "Cleanse skin gently and leave slightly damp.",
+      "Warm a pea-sized amount between fingertips.",
+      "Press (don't rub aggressively) into face, neck, or dry areas.",
+      "Use morning or night; a little goes a long way.",
+      "Store in a cool, dry place away from direct heat.",
+    ],
+    founderNote:
+      "I render this tallow in small batches because I want to know exactly what goes on my skin and yours. Grass-fed, grass-finished, whipped soft — it is the product I reach for every single night.",
+    faqs: [
+      {
+        question: "Will tallow feel greasy on my skin?",
+        answer:
+          "Tallow is bio-compatible with human skin lipids and typically absorbs well when applied in a small amount to slightly damp skin. If it feels too rich, use less or reserve it for nighttime.",
+      },
+      {
+        question: "Is this suitable for sensitive skin?",
+        answer:
+          "Many people with sensitive skin tolerate tallow well because of its simple, short ingredient list. We offer a fragrance-free option. Patch test if you are introducing it for the first time.",
+      },
+      {
+        question: "How long does one jar last?",
+        answer:
+          "With nightly use on the face, most people find a 2 oz jar lasts six to eight weeks. Body use will go faster.",
+      },
+    ],
     featured: true,
   },
   {
@@ -102,6 +132,37 @@ export const products: Product[] = [
     ingestible: false,
     subscription: "monthly-save-10",
     imageTheme: "rose",
+    image: "/images/rose-serum.jpg",
+    imageAlt:
+      "An amber glass dropper bottle of botanical facial oil beside a fresh pink rose",
+    ritual:
+      "Three drops, warmed between your palms, pressed into the skin at the end of your day. Pause to notice the scent of rose and the slip of the oil. Let this be the last thing you do before sleep — a small act of nourishment.",
+    howToUse: [
+      "Apply to clean, slightly damp skin.",
+      "Use 3–5 drops for the full face; less for targeted areas.",
+      "Press gently into skin with both palms.",
+      "Can be used morning or night; many prefer it as an evening ritual.",
+      "Follow with balm on very dry nights if desired.",
+    ],
+    founderNote:
+      "I formulated this oil for women who want their skincare to feel like care, not a checklist. Every oil was chosen for what it offers the skin, pressed without heat to preserve the botanicals.",
+    faqs: [
+      {
+        question: "Can I use facial oil if I have oily skin?",
+        answer:
+          "Yes, many oily skin types tolerate facial oils well — especially lightweight blends with jojoba and squalane. Start with fewer drops on damp skin and observe how your skin responds over two weeks.",
+      },
+      {
+        question: "When should I apply it in my routine?",
+        answer:
+          "Apply after cleansing on slightly damp skin. If you use a hydrating mist, apply the oil while the skin is still dewy.",
+      },
+      {
+        question: "How long will one bottle last?",
+        answer:
+          "With 3–5 drops per use, a 1 oz bottle typically lasts two to three months with daily evening application.",
+      },
+    ],
     featured: true,
   },
   {
@@ -131,6 +192,37 @@ export const products: Product[] = [
       "Contains chamomile (avoid if sensitive to the daisy/ragweed family).",
     subscription: "monthly-tea",
     imageTheme: "rose",
+    image: "/images/dried-mugwort-tray.jpg",
+    imageAlt:
+      "Dried botanical herbs on a warm wooden tray in soft natural light",
+    ritual:
+      "Steep one heaping teaspoon in hot (not boiling) water for 8–10 minutes. Wrap your hands around the cup. Sip slowly without multitasking. Let this be a daily act of listening to what your body is asking for.",
+    howToUse: [
+      "Use one heaping teaspoon per 8 oz of hot water.",
+      "Steep 8–10 minutes, covered if possible.",
+      "Strain and sip mindfully.",
+      "Enjoy 1–3 cups daily as a gentle daily ritual.",
+      "Store the tin sealed in a cool, dark place.",
+    ],
+    founderNote:
+      "This blend was one of the first recipes I made for myself — a daily companion steeped slowly, sipped without hurry. It is blended in the herbalist tradition of women's tonic teas.",
+    faqs: [
+      {
+        question: "Is this tea caffeine-free?",
+        answer:
+          "Yes. This blend is entirely caffeine-free and suitable for evening sipping.",
+      },
+      {
+        question: "Can I drink this tea every day?",
+        answer:
+          "Many people enjoy this blend as a daily ritual. If you are pregnant, nursing, or taking medications, consult your healthcare provider before adding new herbs to your routine.",
+      },
+      {
+        question: "How many cups does one tin make?",
+        answer:
+          "A 3 oz tin yields approximately 30 cups, depending on how generously you measure.",
+      },
+    ],
     featured: true,
   },
   {
@@ -160,6 +252,9 @@ export const products: Product[] = [
       "Contains cacao; processed in a facility that also handles tree nuts.",
     subscription: "monthly-cacao",
     imageTheme: "cacao",
+    image: "/images/cacao-cup.jpg",
+    imageAlt:
+      "A small cup of rich ceremonial cacao resting on a patterned saucer",
     featured: true,
   },
   {
@@ -189,6 +284,9 @@ export const products: Product[] = [
       "Not for use during pregnancy or nursing. Consult your healthcare provider if taking medications. Keep out of reach of children.",
     subscription: "monthly-save-10",
     imageTheme: "sage",
+    image: "/images/rose-tincture.jpg",
+    imageAlt:
+      "An amber glass dropper bottle beside a fresh rose on a wooden dish",
     featured: true,
   },
   {
@@ -215,6 +313,8 @@ export const products: Product[] = [
     ingestible: false,
     subscription: "monthly-save-10",
     imageTheme: "rose",
+    image: "/images/herbal-extract.jpg",
+    imageAlt: "Fine botanical powders and dried rose petals for a clay mask ritual",
   },
   {
     slug: "sacred-calm-tea",
@@ -242,6 +342,8 @@ export const products: Product[] = [
       "Contains chamomile (avoid if sensitive to the daisy/ragweed family).",
     subscription: "monthly-tea",
     imageTheme: "sage",
+    image: "/images/dried-mugwort.jpg",
+    imageAlt: "Bundles of dried herbs gathered for an evening botanical ritual",
   },
   {
     slug: "seasonal-wellness-box",
@@ -269,10 +371,21 @@ export const products: Product[] = [
       "Contents vary; each season's box includes a complete allergen card. May contain cacao and tree nuts.",
     subscription: "seasonal-box",
     imageTheme: "emerald",
+    image: "/images/cacao-morning-book.jpg",
+    imageAlt:
+      "A morning ritual scene with ceremonial cacao, botanicals, and a seasonal wellness guide",
   },
 ];
 
 export const subscriptionTiers: SubscriptionTier[] = [
+  {
+    slug: "monthly-save-10",
+    name: "Monthly Apothecary Subscription",
+    description:
+      "Your favorite skin and wellness rituals delivered fresh each month at member pricing.",
+    cadence: "Ships monthly",
+    priceNote: "Save 10% + free shipping",
+  },
   {
     slug: "monthly-tea",
     name: "Monthly Tea Subscription",
@@ -338,4 +451,8 @@ export function getRelatedProducts(product: Product, limit = 3): Product[] {
     .concat(products.filter((p) => p.collection !== product.collection))
     .filter((p, i, arr) => arr.findIndex((x) => x.slug === p.slug) === i)
     .slice(0, limit);
+}
+
+export function getSubscriptionTier(slug: string) {
+  return subscriptionTiers.find((t) => t.slug === slug);
 }

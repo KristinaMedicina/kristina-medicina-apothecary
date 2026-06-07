@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Section, SectionHeader } from "@/components/ui/Section";
+import { EditorialImage } from "@/components/ui/EditorialImage";
 import { ProductGrid } from "@/components/product/ProductGrid";
 import { ButtonLink } from "@/components/ui/Button";
 import { Disclaimer } from "@/components/ui/Disclaimer";
@@ -18,6 +19,16 @@ export const metadata: Metadata = {
   description:
     "Shop luxury botanical wellness: grass-fed tallow balm, botanical facial oil, women's cycle tea, ceremonial cacao, and adaptogenic tinctures.",
   alternates: { canonical: "/shop" },
+  openGraph: {
+    title: "Shop the Apothecary",
+    description:
+      "Small-batch botanical formulations for skin, tea, cacao, and whole-body wellness rituals.",
+    images: [{ url: "/images/tallow-balm.jpg", alt: "Whipped grass-fed tallow balm" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/images/tallow-balm.jpg"],
+  },
 };
 
 export default async function ShopPage({
@@ -33,11 +44,22 @@ export default async function ShopPage({
   return (
     <>
       <Section tone="white" spacing="sm">
-        <SectionHeader
-          eyebrow="The apothecary"
-          title="Shop the collection"
-          description="Small-batch botanical formulations for skin, tea, cacao, and whole-body wellness rituals."
-        />
+        <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <div>
+            <SectionHeader
+              eyebrow="The apothecary"
+              title="Shop the collection"
+              description="Small-batch botanical formulations for skin, tea, cacao, and whole-body wellness rituals."
+            />
+          </div>
+          <EditorialImage
+            src="/images/dried-herbs.jpg"
+            alt="Dried botanical herbs arranged for small-batch apothecary blending"
+            ratio="landscape"
+            sizes="(min-width: 1024px) 40vw, 100vw"
+            className="hidden sm:block"
+          />
+        </div>
 
         {/* Collection filters */}
         <div className="mt-10 flex flex-wrap justify-center gap-3">

@@ -1,8 +1,12 @@
+import Image from "next/image";
 import { cn } from "@/lib/format";
 
 type Theme = "rose" | "sage" | "gold" | "emerald" | "cacao";
 
-const palettes: Record<Theme, { from: string; to: string; leaf: string; accent: string }> = {
+const palettes: Record<
+  Theme,
+  { from: string; to: string; leaf: string; accent: string }
+> = {
   rose: { from: "#f3dcd8", to: "#e7cfcb", leaf: "#c58f8c", accent: "#a96f6c" },
   sage: { from: "#dde3d3", to: "#cdd5c3", leaf: "#8e9c82", accent: "#6f7d63" },
   gold: { from: "#efe3c6", to: "#ddc99a", leaf: "#b89b5e", accent: "#9a7f44" },
@@ -14,30 +18,52 @@ interface ProductImageProps {
   theme: Theme;
   label: string;
   className?: string;
-  /** Larger leaf composition for hero / detail usage. */
   variant?: "card" | "detail";
+  /** Real photography — when set, renders next/image instead of the SVG fallback. */
+  src?: string;
+  alt?: string;
+  sizes?: string;
+  priority?: boolean;
+  position?: string;
 }
 
-/**
- * A polished SVG placeholder used for all product and editorial imagery.
- * Renders a soft gradient with a botanical leaf motif so the site looks
- * complete with no binary assets. Swap for <Image> + real photography later.
- */
 export function ProductImage({
   theme,
   label,
   className,
   variant = "card",
+  src,
+  alt,
+  sizes = "(min-width: 1024px) 50vw, (min-width: 640px) 50vw, 100vw",
+  priority = false,
+  position = "center",
 }: ProductImageProps) {
+  if (src) {
+    return (
+      <div
+        className={cn("relative overflow-hidden rounded-luxe", className)}
+        role="img"
+        aria-label={alt ?? label}
+      >
+        <Image
+          src={src}
+          alt={alt ?? label}
+          fill
+          sizes={sizes}
+          priority={priority}
+          style={{ objectPosition: position }}
+          className="object-cover"
+        />
+      </div>
+    );
+  }
+
   const p = palettes[theme];
   const id = `grad-${theme}-${variant}`;
 
   return (
     <div
-      className={cn(
-        "relative overflow-hidden rounded-[1.25rem]",
-        className,
-      )}
+      className={cn("relative overflow-hidden rounded-luxe", className)}
       role="img"
       aria-label={`${label} — botanical product imagery`}
     >
@@ -54,8 +80,6 @@ export function ProductImage({
           </linearGradient>
         </defs>
         <rect width="400" height="480" fill={`url(#${id})`} />
-
-        {/* botanical stem + leaves */}
         <g
           stroke={p.leaf}
           strokeWidth="2.5"
@@ -78,8 +102,6 @@ export function ProductImage({
             );
           })}
         </g>
-
-        {/* blossom */}
         <g fill={p.accent} opacity="0.7">
           {[0, 60, 120, 180, 240, 300].map((deg) => (
             <ellipse

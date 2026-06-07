@@ -22,6 +22,16 @@ export const metadata: Metadata = {
   description:
     "Educational writing on ceremonial cacao, botanical skincare, women's wellness, herbal rituals, and seasonal living.",
   alternates: { canonical: "/journal" },
+  openGraph: {
+    title: "The Journal",
+    description:
+      "Botanical education and ritual writing from Kristina Medicina Apothecary.",
+    images: [{ url: "/images/cacao-morning-book.jpg", alt: "Morning cacao ritual" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/images/cacao-morning-book.jpg"],
+  },
 };
 
 export default async function JournalPage({

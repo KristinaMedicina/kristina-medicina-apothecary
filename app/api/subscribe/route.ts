@@ -21,9 +21,17 @@ export async function POST(request: Request) {
     );
   }
 
-  // When Klaviyo is configured, forward the subscription. Otherwise we accept
-  // it gracefully so the form works in development and pre-launch.
-  if (integrations.klaviyo.enabled) {
+  if (integrations.kit.enabled && integrations.kit.apiSecret) {
+    try {
+      await subscribeToKit(email, source);
+    } catch (err) {
+      console.error("Kit subscribe failed:", err);
+      return NextResponse.json(
+        { error: "We couldn't subscribe you right now. Please try again." },
+        { status: 502 },
+      );
+    }
+  } else if (integrations.klaviyo.enabled) {
     try {
       await subscribeToKlaviyo(email, source);
     } catch (err) {
@@ -41,6 +49,28 @@ export async function POST(request: Request) {
     message:
       "Welcome to the apothecary. Your free guide is on its way to your inbox.",
   });
+}
+
+async function subscribeToKit(email: string, source: string) {
+  const formId = integrations.kit.formId;
+  if (!formId) throw new Error("Kit form id missing");
+
+  const res = await fetch(
+    `https://api.convertkit.com/v3/forms/${formId}/subscribe`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        api_key: integrations.kit.apiSecret,
+        email,
+        fields: { source },
+      }),
+    },
+  );
+
+  if (!res.ok) {
+    throw new Error(`Kit responded ${res.status}`);
+  }
 }
 
 async function subscribeToKlaviyo(email: string, source: string) {

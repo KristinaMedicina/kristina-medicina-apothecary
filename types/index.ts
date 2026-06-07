@@ -18,6 +18,11 @@ export type SubscriptionPlan =
   | "seasonal-box"
   | "monthly-save-10";
 
+export interface ProductFaq {
+  question: string;
+  answer: string;
+}
+
 export interface Product {
   slug: string;
   name: string;
@@ -41,6 +46,17 @@ export interface Product {
   subscription?: SubscriptionPlan;
   /** Stripe Payment Link URL. When unset, the buy button shows "coming soon". */
   stripePaymentLink?: string;
+  /** Real product photography path (falls back to themed SVG when unset). */
+  image?: string;
+  imageAlt?: string;
+  /** Ritual guidance for the product detail page. */
+  ritual?: string;
+  /** Step-by-step usage instructions. */
+  howToUse?: string[];
+  /** Short founder note for the product detail page. */
+  founderNote?: string;
+  /** Product-specific FAQs for the detail page. */
+  faqs?: ProductFaq[];
   /** Decorative theme used by the SVG product image placeholder. */
   imageTheme: "rose" | "sage" | "gold" | "emerald" | "cacao";
   featured?: boolean;
@@ -58,6 +74,9 @@ export interface Consultation {
   disclaimer: string;
   /** Calendly (or other scheduler) booking URL. */
   bookingUrl?: string;
+  /** Real photography for consultation cards and detail blocks. */
+  image?: string;
+  imageAlt?: string;
   imageTheme: "rose" | "sage" | "gold" | "emerald" | "cacao";
 }
 

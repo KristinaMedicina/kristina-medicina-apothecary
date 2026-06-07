@@ -4,10 +4,10 @@ import { notFound } from "next/navigation";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { ProductImage } from "@/components/product/ProductImage";
 import { ProductGrid } from "@/components/product/ProductGrid";
-import { BuyButton } from "@/components/product/BuyButton";
+import { ProductDetailContent } from "@/components/product/ProductDetailContent";
+import { PurchaseButton } from "@/components/product/PurchaseButton";
 import { AddToCartButton } from "@/components/product/AddToCartButton";
 import { Badge } from "@/components/ui/Badge";
-import { Disclaimer } from "@/components/ui/Disclaimer";
 import { ButtonLink } from "@/components/ui/Button";
 import {
   products,
@@ -15,7 +15,7 @@ import {
   getCollection,
   getRelatedProducts,
 } from "@/lib/products";
-import { FDA_DISCLAIMER, site } from "@/lib/site";
+import { site } from "@/lib/site";
 import { formatPrice } from "@/lib/format";
 
 export function generateStaticParams() {
@@ -30,14 +30,26 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = getProduct(slug);
   if (!product) return { title: "Product not found" };
+  const title = product.name;
+  const description = product.description;
+  const image = product.image ? `${site.url}${product.image}` : undefined;
+
   return {
-    title: product.name,
-    description: product.description,
+    title,
+    description,
     alternates: { canonical: `/shop/${product.slug}` },
     openGraph: {
-      title: product.name,
-      description: product.description,
+      title,
+      description,
       type: "website",
+      url: `${site.url}/shop/${product.slug}`,
+      ...(image && { images: [{ url: image, alt: product.imageAlt ?? product.name }] }),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      ...(image && { images: [image] }),
     },
   };
 }
@@ -59,6 +71,7 @@ export default async function ProductPage({
     "@type": "Product",
     name: product.name,
     description: product.description,
+    image: product.image ? `${site.url}${product.image}` : undefined,
     category: collection?.name,
     brand: { "@type": "Brand", name: site.name },
     offers: {
@@ -79,6 +92,7 @@ export default async function ProductPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
+      {/* Hero */}
       <Section tone="white" spacing="sm">
         <nav className="mb-8 text-xs text-ink-soft">
           <Link href="/shop" className="hover:text-emerald">
@@ -99,12 +113,16 @@ export default async function ProductPage({
           <span className="text-ink">{product.name}</span>
         </nav>
 
-        <div className="grid gap-10 lg:grid-cols-2">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
           <div className="lg:sticky lg:top-28 lg:self-start">
             <ProductImage
               theme={product.imageTheme}
               label={product.name}
+              src={product.image}
+              alt={product.imageAlt}
               variant="detail"
+              priority
+              sizes="(min-width: 1024px) 50vw, 100vw"
               className="aspect-[4/5] w-full"
             />
           </div>
@@ -116,7 +134,7 @@ export default async function ProductPage({
                 <Badge tone="gold">Subscribe &amp; Save</Badge>
               )}
             </div>
-            <h1 className="mt-4 font-display text-4xl text-emerald">
+            <h1 className="mt-4 font-display text-3xl text-emerald sm:text-4xl lg:text-5xl">
               {product.name}
             </h1>
             <p className="mt-2 text-sm text-ink-soft">{product.size}</p>
@@ -128,17 +146,10 @@ export default async function ProductPage({
             </p>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <BuyButton product={product} className="sm:flex-1" />
-              <AddToCartButton product={product} />
+              <PurchaseButton product={product} size="lg" className="sm:flex-1" />
+              <AddToCartButton product={product} size="lg" />
             </div>
-            {product.subscription && (
-              <p className="mt-3 text-xs text-ink-soft">
-                Subscription option available, ask us about monthly and seasonal
-                deliveries.
-              </p>
-            )}
 
-            {/* Benefits */}
             <div className="mt-8">
               <h2 className="eyebrow text-gold">Benefits</h2>
               <ul className="mt-3 space-y-2">
@@ -154,7 +165,6 @@ export default async function ProductPage({
               </ul>
             </div>
 
-            {/* Ingredients */}
             <div className="mt-8">
               <h2 className="eyebrow text-gold">Ingredients</h2>
               <p className="mt-3 text-sm leading-relaxed text-ink-soft">
@@ -162,38 +172,27 @@ export default async function ProductPage({
               </p>
             </div>
 
-            {/* Story */}
             <div className="mt-8">
               <h2 className="eyebrow text-gold">Our story</h2>
               <p className="mt-3 text-sm leading-relaxed text-ink-soft">
                 {product.story}
               </p>
             </div>
-
-            {product.allergenNote && (
-              <Disclaimer
-                title="Allergen & safety"
-                tone="bordered"
-                className="mt-8"
-              >
-                {product.allergenNote}
-              </Disclaimer>
-            )}
-
-            {product.ingestible && (
-              <Disclaimer title="FDA disclaimer" className="mt-4">
-                {FDA_DISCLAIMER}
-              </Disclaimer>
-            )}
           </div>
         </div>
       </Section>
 
-      {/* Consultation cross-sell */}
+      {/* Extended sections */}
+      <Section tone="cream" spacing="sm">
+        <div className="mx-auto max-w-3xl">
+          <ProductDetailContent product={product} />
+        </div>
+      </Section>
+
       <Section tone="sage" spacing="sm">
         <div className="flex flex-col items-center gap-5 text-center lg:flex-row lg:justify-between lg:text-left">
           <div className="max-w-xl">
-            <h2 className="font-display text-2xl text-emerald">
+            <h2 className="font-display text-2xl text-emerald sm:text-3xl">
               Want personalized guidance?
             </h2>
             <p className="mt-2 text-ink-soft">
@@ -206,9 +205,8 @@ export default async function ProductPage({
         </div>
       </Section>
 
-      {/* Related */}
       {related.length > 0 && (
-        <Section tone="cream">
+        <Section tone="white">
           <SectionHeader eyebrow="You may also love" title="Complete the ritual" />
           <ProductGrid products={related} className="mt-12" />
         </Section>

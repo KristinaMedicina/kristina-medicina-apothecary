@@ -12,11 +12,23 @@ import { Badge } from "@/components/ui/Badge";
 import { consultations, consultationFaqs } from "@/lib/consultations";
 import { formatPrice } from "@/lib/format";
 
+const ogImage = "/images/community.jpg";
+
 export const metadata: Metadata = {
   title: "Services",
   description:
     "Botanical wellness consultations, ceremonial cacao experiences, and community gatherings, educational offerings rooted in traditional herbalism and ritual.",
   alternates: { canonical: "/consultations" },
+  openGraph: {
+    title: "Services & Guidance",
+    description:
+      "Botanical wellness consultations, ceremonial cacao experiences, and community gatherings.",
+    images: [{ url: ogImage, alt: "A circle gathered for a cacao and wellness workshop" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: [ogImage],
+  },
 };
 
 const serviceCategories = [
@@ -146,6 +158,9 @@ export default function ConsultationsPage() {
                 <ProductImage
                   theme={c.imageTheme}
                   label={c.name}
+                  src={c.image}
+                  alt={c.imageAlt}
+                  sizes="(min-width: 1024px) 40vw, 100vw"
                   className="h-full min-h-[260px] w-full"
                 />
               </div>

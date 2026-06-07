@@ -9,6 +9,21 @@ export const metadata: Metadata = {
   description:
     "The story, mission, and plant-centered philosophy behind Kristina Medicina Apothecary, luxury botanical wellness for modern women.",
   alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About Kristina Medicina",
+    description:
+      "A modern apothecary rooted in plant wisdom, founded by herbalist Kristina.",
+    images: [
+      {
+        url: "/images/kristina-altar.jpg",
+        alt: "Kristina at her botanical altar",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/images/kristina-altar.jpg"],
+  },
 };
 
 const pillars = [

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { integrations } from "@/config/integrations";
 import { cn } from "@/lib/format";
 
 interface NewsletterFormProps {
@@ -15,6 +16,10 @@ interface NewsletterFormProps {
 
 type Status = "idle" | "loading" | "success" | "error";
 
+/**
+ * Newsletter capture — uses Kit embed when NEXT_PUBLIC_KIT_FORM_ID is set,
+ * otherwise posts to /api/subscribe (Klaviyo or graceful dev fallback).
+ */
 export function NewsletterForm({
   variant = "light",
   source = "site",
@@ -25,6 +30,8 @@ export function NewsletterForm({
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
+
+  const kitFormId = integrations.kit.formId;
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -49,6 +56,31 @@ export function NewsletterForm({
   }
 
   const dark = variant === "dark";
+
+  if (kitFormId) {
+    return (
+      <div className={cn("w-full", className)}>
+        <div
+          data-kit-form-id={kitFormId}
+          className="kit-form-embed min-h-[120px] w-full"
+          aria-label="Newsletter signup"
+        />
+        <p
+          className={cn(
+            "mt-2 text-xs",
+            dark ? "text-cream/60" : "text-ink-soft/70",
+          )}
+        >
+          We respect your inbox. Unsubscribe anytime.
+        </p>
+        <noscript>
+          <p className={cn("mt-2 text-sm", dark ? "text-cream/80" : "text-ink-soft")}>
+            Enable JavaScript to subscribe, or email us at hello@kristinamedicina.com.
+          </p>
+        </noscript>
+      </div>
+    );
+  }
 
   if (status === "success") {
     return (
@@ -83,7 +115,7 @@ export function NewsletterForm({
           onChange={(e) => setEmail(e.target.value)}
           placeholder={placeholder}
           className={cn(
-            "w-full flex-1 rounded-full border px-5 py-3 text-sm outline-none transition focus:ring-2 focus:ring-gold",
+            "w-full min-w-0 flex-1 rounded-full border px-5 py-3 text-sm outline-none transition focus:ring-2 focus:ring-gold",
             dark
               ? "border-cream/30 bg-cream/10 text-cream placeholder:text-cream/50"
               : "border-gold/30 bg-cream-50 text-ink placeholder:text-ink-soft/60",
@@ -93,7 +125,7 @@ export function NewsletterForm({
           type="submit"
           disabled={status === "loading"}
           className={cn(
-            "shrink-0 rounded-full px-6 py-3 text-sm font-medium transition-all disabled:opacity-60",
+            "shrink-0 rounded-full px-6 py-3 text-sm font-medium transition-all disabled:opacity-60 min-h-[44px]",
             dark
               ? "bg-gold text-ink hover:bg-gold-soft"
               : "bg-emerald text-cream hover:bg-emerald-700",

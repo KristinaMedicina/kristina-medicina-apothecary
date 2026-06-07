@@ -1,7 +1,7 @@
 import type { Consultation } from "@/types";
 import { formatPrice } from "@/lib/format";
 import { ProductImage } from "@/components/product/ProductImage";
-import { BookButton } from "@/components/consult/BookButton";
+import { BookConsultationButton } from "@/components/consult/BookConsultationButton";
 
 export function ConsultationCard({
   consultation,
@@ -16,6 +16,9 @@ export function ConsultationCard({
         <ProductImage
           theme={consultation.imageTheme}
           label={consultation.name}
+          src={consultation.image}
+          alt={consultation.imageAlt}
+          sizes="(min-width: 1024px) 33vw, 100vw"
           className="h-full w-full"
         />
       </div>
@@ -34,7 +37,10 @@ export function ConsultationCard({
         <p className="mt-4 font-display text-2xl text-ink">
           {formatPrice(consultation.price)}
         </p>
-        <BookButton consultation={consultation} className="mt-4 w-full" />
+        <BookConsultationButton
+          consultation={consultation}
+          className="mt-4 w-full"
+        />
         {showDisclaimer && (
           <p className="mt-3 text-[0.7rem] leading-relaxed text-ink-soft/80">
             Educational, not medical advice.

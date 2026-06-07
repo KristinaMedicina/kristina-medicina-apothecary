@@ -4,9 +4,6 @@
  * Everything here is a safe no-op until the matching environment variable is
  * set, so the site builds and runs cleanly before any third-party account
  * exists. See .env.example for the full list of keys.
- *
- * Commerce is delegated to hosted tools (Stripe Payment Links + Calendly),
- * so there is no payment infrastructure to build, secure, or maintain.
  */
 
 const env = (key: string): string | undefined => {
@@ -14,46 +11,80 @@ const env = (key: string): string | undefined => {
   return value && value.length > 0 ? value : undefined;
 };
 
+/** First defined env value wins — supports launch names and legacy aliases. */
+const envFirst = (...keys: string[]): string | undefined => {
+  for (const key of keys) {
+    const value = env(key);
+    if (value) return value;
+  }
+  return undefined;
+};
+
 export const integrations = {
-  /**
-   * Stripe Payment Links. To go live, create a Payment Link per product in the
-   * Stripe Dashboard and paste the URL into the matching env var (or directly
-   * into `lib/products.ts` -> product.stripePaymentLink).
-   */
   stripe: {
     publishableKey: env("NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"),
     paymentLinks: {
-      whippedGrassFedTallowBalm: env("NEXT_PUBLIC_STRIPE_LINK_TALLOW_BALM"),
-      botanicalFacialOil: env("NEXT_PUBLIC_STRIPE_LINK_FACIAL_OIL"),
-      womensCycleTea: env("NEXT_PUBLIC_STRIPE_LINK_CYCLE_TEA"),
-      ceremonialCacaoBlend: env("NEXT_PUBLIC_STRIPE_LINK_CACAO"),
-      eveningAdaptogenicTincture: env("NEXT_PUBLIC_STRIPE_LINK_TINCTURE"),
+      whippedGrassFedTallowBalm: envFirst(
+        "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_TALLOW",
+        "NEXT_PUBLIC_STRIPE_LINK_TALLOW_BALM",
+      ),
+      botanicalFacialOil: envFirst(
+        "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_FACIAL_OIL",
+        "NEXT_PUBLIC_STRIPE_LINK_FACIAL_OIL",
+      ),
+      womensCycleTea: envFirst(
+        "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_CYCLE_TEA",
+        "NEXT_PUBLIC_STRIPE_LINK_CYCLE_TEA",
+      ),
+      ceremonialCacaoBlend: envFirst(
+        "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_CACAO",
+        "NEXT_PUBLIC_STRIPE_LINK_CACAO",
+      ),
+      eveningAdaptogenicTincture: envFirst(
+        "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_TINCTURE",
+        "NEXT_PUBLIC_STRIPE_LINK_TINCTURE",
+      ),
     },
     get enabled() {
       return Boolean(this.publishableKey);
     },
   },
 
-  /**
-   * Calendly (or Acuity / Practice Better) booking links for consultations.
-   * Set one URL per consultation; the booking buttons open them in a new tab.
-   */
   calendly: {
     baseUrl: env("NEXT_PUBLIC_CALENDLY_URL"),
     consultations: {
-      botanicalWellness: env("NEXT_PUBLIC_CALENDLY_BOTANICAL_WELLNESS"),
-      ceremonialCacao: env("NEXT_PUBLIC_CALENDLY_CEREMONIAL_CACAO"),
-      preparationIntegration: env("NEXT_PUBLIC_CALENDLY_PREPARATION_INTEGRATION"),
+      botanicalWellness: envFirst(
+        "NEXT_PUBLIC_CALENDLY_BOTANICAL",
+        "NEXT_PUBLIC_CALENDLY_BOTANICAL_WELLNESS",
+      ),
+      ceremonialCacao: envFirst(
+        "NEXT_PUBLIC_CALENDLY_CACAO",
+        "NEXT_PUBLIC_CALENDLY_CEREMONIAL_CACAO",
+      ),
+      preparationIntegration: envFirst(
+        "NEXT_PUBLIC_CALENDLY_INTEGRATION",
+        "NEXT_PUBLIC_CALENDLY_PREPARATION_INTEGRATION",
+      ),
     },
     get enabled() {
-      return Boolean(this.baseUrl);
+      return Boolean(
+        this.baseUrl ||
+          this.consultations.botanicalWellness ||
+          this.consultations.ceremonialCacao ||
+          this.consultations.preparationIntegration,
+      );
     },
   },
 
-  /**
-   * Klaviyo email marketing. The newsletter form posts to /api/subscribe,
-   * which forwards to Klaviyo when these are set (otherwise it logs locally).
-   */
+  /** Kit (ConvertKit) email capture — form embed or API forwarding. */
+  kit: {
+    formId: env("NEXT_PUBLIC_KIT_FORM_ID"),
+    apiSecret: env("KIT_API_SECRET"),
+    get enabled() {
+      return Boolean(this.formId || (this.apiSecret && this.formId));
+    },
+  },
+
   klaviyo: {
     publicApiKey: env("NEXT_PUBLIC_KLAVIYO_PUBLIC_KEY"),
     listId: env("KLAVIYO_LIST_ID"),
@@ -63,7 +94,6 @@ export const integrations = {
     },
   },
 
-  /** Google Analytics 4. Loaded only after cookie consent is granted. */
   analytics: {
     gaId: env("NEXT_PUBLIC_GA_ID"),
     get enabled() {
@@ -71,10 +101,6 @@ export const integrations = {
     },
   },
 
-  /**
-   * Deferred until post-revenue (kept here so the wiring point is obvious).
-   * Meta Pixel and the Shopify Storefront API are intentionally not built yet.
-   */
   deferred: {
     metaPixelId: env("NEXT_PUBLIC_META_PIXEL_ID"),
     shopifyDomain: env("NEXT_PUBLIC_SHOPIFY_DOMAIN"),

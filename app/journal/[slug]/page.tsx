@@ -26,6 +26,8 @@ export async function generateMetadata({
   const title = article.seoTitle ?? article.title;
   const description = article.seoDescription ?? article.excerpt;
 
+  const image = article.image ? `${site.url}${article.image}` : undefined;
+
   return {
     title,
     description,
@@ -35,9 +37,16 @@ export async function generateMetadata({
       description,
       type: "article",
       publishedTime: article.publishedAt,
-      ...(article.image && {
-        images: [{ url: article.image, alt: article.imageAlt ?? article.title }],
+      url: `${site.url}/journal/${article.slug}`,
+      ...(image && {
+        images: [{ url: image, alt: article.imageAlt ?? article.title }],
       }),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      ...(image && { images: [image] }),
     },
   };
 }
