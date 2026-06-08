@@ -46,7 +46,7 @@ export function InstagramCallout({
         )}
       >
         <div className="max-w-xl">
-          <p className="eyebrow text-gold">@kristinamedicina</p>
+          <p className="eyebrow text-gold">@kristina.medicina</p>
           <h2 className="mt-3 font-display text-2xl text-emerald sm:text-3xl">
             Follow Along on Instagram
           </h2>
@@ -89,7 +89,7 @@ export function InstagramCallout({
         rel="noopener noreferrer"
         className="mt-4 inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-emerald/40 px-6 py-3 text-sm font-medium tracking-wide text-emerald transition-all duration-300 hover:bg-emerald hover:text-cream focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
       >
-        @kristinamedicina
+        @kristina.medicina
       </a>
     </div>
   );
