@@ -75,7 +75,7 @@ export function NewsletterForm({
         </p>
         <noscript>
           <p className={cn("mt-2 text-sm", dark ? "text-cream/80" : "text-ink-soft")}>
-            Enable JavaScript to subscribe, or email us at hello@kristinamedicina.com.
+            Enable JavaScript to subscribe, or email us at kristinamedicinalove@gmail.com.
           </p>
         </noscript>
       </div>

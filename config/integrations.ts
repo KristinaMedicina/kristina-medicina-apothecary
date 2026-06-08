@@ -24,25 +24,20 @@ export const integrations = {
   stripe: {
     publishableKey: env("NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"),
     paymentLinks: {
-      whippedGrassFedTallowBalm: envFirst(
-        "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_TALLOW",
-        "NEXT_PUBLIC_STRIPE_LINK_TALLOW_BALM",
-      ),
-      botanicalFacialOil: envFirst(
-        "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_FACIAL_OIL",
-        "NEXT_PUBLIC_STRIPE_LINK_FACIAL_OIL",
-      ),
-      womensCycleTea: envFirst(
-        "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_CYCLE_TEA",
-        "NEXT_PUBLIC_STRIPE_LINK_CYCLE_TEA",
-      ),
-      ceremonialCacaoBlend: envFirst(
-        "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_CACAO",
-        "NEXT_PUBLIC_STRIPE_LINK_CACAO",
-      ),
-      eveningAdaptogenicTincture: envFirst(
-        "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_TINCTURE",
-        "NEXT_PUBLIC_STRIPE_LINK_TINCTURE",
+      cacao: env("NEXT_PUBLIC_STRIPE_PAYMENT_LINK_CACAO"),
+      tallow4ozLavender: env("NEXT_PUBLIC_STRIPE_PAYMENT_LINK_TALLOW_4OZ_LAVENDER"),
+      tallow4ozLemon: env("NEXT_PUBLIC_STRIPE_PAYMENT_LINK_TALLOW_4OZ_LEMON"),
+      tallow8ozLavender: env("NEXT_PUBLIC_STRIPE_PAYMENT_LINK_TALLOW_8OZ_LAVENDER"),
+      tallow8ozLemon: env("NEXT_PUBLIC_STRIPE_PAYMENT_LINK_TALLOW_8OZ_LEMON"),
+      facialOilRose: env("NEXT_PUBLIC_STRIPE_PAYMENT_LINK_FACIAL_OIL_ROSE"),
+      mugwortTea: env("NEXT_PUBLIC_STRIPE_PAYMENT_LINK_MUGWORT_TEA"),
+      mugwortTincture: env("NEXT_PUBLIC_STRIPE_PAYMENT_LINK_MUGWORT_TINCTURE"),
+      mugwortInfusedOil: env("NEXT_PUBLIC_STRIPE_PAYMENT_LINK_MUGWORT_INFUSED_OIL"),
+      sagebrushTea: env("NEXT_PUBLIC_STRIPE_PAYMENT_LINK_SAGEBRUSH_TEA"),
+      snakeOilStick: env("NEXT_PUBLIC_STRIPE_PAYMENT_LINK_SNAKE_OIL_STICK"),
+      snakeOilTin: env("NEXT_PUBLIC_STRIPE_PAYMENT_LINK_SNAKE_OIL_TIN"),
+      seasonalWellnessBoxSubscription: env(
+        "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_SEASONAL_WELLNESS_BOX_SUBSCRIPTION",
       ),
     },
     get enabled() {

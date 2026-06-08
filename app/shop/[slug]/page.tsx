@@ -139,16 +139,46 @@ export default async function ProductPage({
             </h1>
             <p className="mt-2 text-sm text-ink-soft">{product.size}</p>
             <p className="mt-4 font-display text-3xl text-ink">
-              {formatPrice(product.price)}
+              {product.variants && product.variants.length > 0
+                ? `From ${formatPrice(product.price)}`
+                : formatPrice(product.price)}
             </p>
             <p className="mt-5 text-base leading-relaxed text-ink-soft">
               {product.longDescription}
             </p>
 
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <PurchaseButton product={product} size="lg" className="sm:flex-1" />
-              <AddToCartButton product={product} size="lg" />
-            </div>
+            {product.variants && product.variants.length > 0 ? (
+              <div className="mt-7">
+                <h2 className="eyebrow text-gold">Choose your option</h2>
+                <ul className="mt-3 space-y-3">
+                  {product.variants.map((v) => (
+                    <li
+                      key={v.label}
+                      className="flex flex-col gap-3 rounded-xl border border-gold/20 bg-cream-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
+                    >
+                      <div className="flex items-center justify-between gap-4 sm:justify-start">
+                        <span className="text-sm text-ink">{v.label}</span>
+                        <span className="font-display text-lg text-ink">
+                          {formatPrice(v.price)}
+                        </span>
+                      </div>
+                      <PurchaseButton
+                        product={product}
+                        link={v.stripePaymentLink}
+                        label="Buy Now"
+                        size="sm"
+                        className="sm:w-auto sm:px-6"
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                <PurchaseButton product={product} size="lg" className="sm:flex-1" />
+                <AddToCartButton product={product} size="lg" />
+              </div>
+            )}
 
             <div className="mt-8">
               <h2 className="eyebrow text-gold">Benefits</h2>

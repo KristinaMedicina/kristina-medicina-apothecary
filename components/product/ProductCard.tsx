@@ -4,10 +4,12 @@ import { formatPrice } from "@/lib/format";
 import { ProductImage } from "@/components/product/ProductImage";
 import { PurchaseButton } from "@/components/product/PurchaseButton";
 import { AddToCartButton } from "@/components/product/AddToCartButton";
+import { ButtonLink } from "@/components/ui/Button";
 import { getCollection } from "@/lib/products";
 
 export function ProductCard({ product }: { product: Product }) {
   const collection = getCollection(product.collection);
+  const hasVariants = Boolean(product.variants && product.variants.length > 0);
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-[1.5rem] border border-gold/20 bg-cream-50 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_-22px_rgba(33,80,60,0.45)] motion-reduce:transition-none motion-reduce:hover:translate-y-0">
@@ -45,14 +47,28 @@ export function ProductCard({ product }: { product: Product }) {
 
         <div className="mt-4 flex items-center justify-between gap-2">
           <span className="font-display text-2xl text-ink">
-            {formatPrice(product.price)}
+            {hasVariants
+              ? `From ${formatPrice(product.price)}`
+              : formatPrice(product.price)}
           </span>
           <span className="text-xs text-ink-soft">{product.size}</span>
         </div>
 
         <div className="mt-4 flex flex-col gap-2">
-          <PurchaseButton product={product} size="sm" />
-          <AddToCartButton product={product} size="sm" />
+          {hasVariants ? (
+            <ButtonLink
+              href={`/shop/${product.slug}`}
+              size="sm"
+              className="w-full"
+            >
+              View Options
+            </ButtonLink>
+          ) : (
+            <>
+              <PurchaseButton product={product} size="sm" />
+              <AddToCartButton product={product} size="sm" />
+            </>
+          )}
         </div>
       </div>
     </article>

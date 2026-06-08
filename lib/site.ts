@@ -4,9 +4,7 @@ export const site = {
   description:
     "Luxury botanical wellness for modern women. Plant wisdom, ritual, skin nourishment, nervous system support, and women's wellness.",
   url: "https://kristinamedicina.com",
-  email: "hello@kristinamedicina.com",
-  // CAN-SPAM compliant physical address (placeholder).
-  address: "1208 Linden Way, Suite 4, Portland, OR 97204",
+  email: "kristinamedicinalove@gmail.com",
   social: {
     instagram: "https://instagram.com/kristinamedicina",
     pinterest: "https://pinterest.com/kristinamedicina",

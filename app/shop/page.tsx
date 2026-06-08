@@ -41,6 +41,9 @@ export default async function ShopPage({
   const list = active ? getProductsByCollection(active) : products;
   const activeMeta = active ? getCollection(active) : null;
 
+  const featured = list.filter((p) => p.featured);
+  const additional = list.filter((p) => !p.featured);
+
   return (
     <>
       <Section tone="white" spacing="sm">
@@ -87,12 +90,37 @@ export default async function ShopPage({
           </div>
         )}
 
-        {list.length > 0 ? (
-          <ProductGrid products={list} />
-        ) : (
+        {list.length === 0 && (
           <p className="py-12 text-center text-ink-soft">
             New botanicals are coming to this collection soon.
           </p>
+        )}
+
+        {active ? (
+          list.length > 0 && <ProductGrid products={list} />
+        ) : (
+          <div className="space-y-16">
+            {featured.length > 0 && (
+              <div>
+                <SectionHeader
+                  eyebrow="Featured Products"
+                  title="Our most-loved rituals"
+                  align="center"
+                />
+                <ProductGrid products={featured} className="mt-10" />
+              </div>
+            )}
+            {additional.length > 0 && (
+              <div>
+                <SectionHeader
+                  eyebrow="Additional Apothecary Products"
+                  title="More from the apothecary"
+                  align="center"
+                />
+                <ProductGrid products={additional} className="mt-10" />
+              </div>
+            )}
+          </div>
         )}
 
         <Disclaimer title="A note on wellness" className="mx-auto mt-12 max-w-3xl">

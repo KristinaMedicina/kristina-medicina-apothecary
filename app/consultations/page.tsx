@@ -5,6 +5,7 @@ import { GoldDivider } from "@/components/ui/Botanical";
 import { ProductImage } from "@/components/product/ProductImage";
 import { EditorialImage } from "@/components/ui/EditorialImage";
 import { BookButton } from "@/components/consult/BookButton";
+import { InstagramCallout } from "@/components/marketing/InstagramCallout";
 import { ButtonLink } from "@/components/ui/Button";
 import { FAQAccordion } from "@/components/ui/FAQAccordion";
 import { Disclaimer } from "@/components/ui/Disclaimer";
@@ -274,6 +275,11 @@ export default function ConsultationsPage() {
         <div className="mx-auto mt-10 max-w-3xl">
           <FAQAccordion items={consultationFaqs} />
         </div>
+      </Section>
+
+      {/* Instagram */}
+      <Section tone="white" spacing="sm">
+        <InstagramCallout variant="banner" />
       </Section>
 
       {/* Closing CTA */}

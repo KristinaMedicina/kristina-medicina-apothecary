@@ -7,10 +7,13 @@ interface PurchaseButtonProps {
   size?: "sm" | "md" | "lg";
   label?: string;
   className?: string;
+  /** Explicit Stripe link override (e.g. a specific product variant). */
+  link?: string;
 }
 
 /**
- * Routes to the product's Stripe Payment Link when configured.
+ * Routes to a Stripe Payment Link when configured — either an explicit `link`
+ * (for a specific variant) or the product's own link.
  * Shows "Coming Soon" when no link is set — safe for pre-launch builds.
  */
 export function PurchaseButton({
@@ -19,7 +22,9 @@ export function PurchaseButton({
   size = "md",
   label = "Buy Now",
   className,
+  link,
 }: PurchaseButtonProps) {
+  const href = link ?? product.stripePaymentLink;
   const base =
     "inline-flex w-full items-center justify-center gap-2 rounded-full font-medium tracking-wide transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-cream";
   const sizes = {
@@ -33,7 +38,7 @@ export function PurchaseButton({
       "border border-emerald/40 text-emerald hover:bg-emerald hover:text-cream",
   };
 
-  if (!product.stripePaymentLink) {
+  if (!href) {
     return (
       <span
         aria-disabled="true"
@@ -52,7 +57,7 @@ export function PurchaseButton({
 
   return (
     <a
-      href={product.stripePaymentLink}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       className={cn(base, sizes[size], variants[variant], className)}

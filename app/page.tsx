@@ -4,6 +4,7 @@ import { Hero } from "@/components/marketing/Hero";
 import { ButtonLink } from "@/components/ui/Button";
 import { NewsletterForm } from "@/components/marketing/NewsletterForm";
 import { LeadMagnet } from "@/components/marketing/LeadMagnet";
+import { InstagramCallout } from "@/components/marketing/InstagramCallout";
 import { testimonials } from "@/lib/testimonials";
 
 const offerings = [
@@ -13,7 +14,7 @@ const offerings = [
       "Single-origin ceremonial cacao for ritual, reflection, and connection.",
     image: "/images/cacao-cup.jpg",
     alt: "A small cup of rich ceremonial cacao resting on a patterned saucer",
-    href: "/shop/ceremonial-cacao-blend",
+    href: "/shop/ceremonial-grade-cacao",
   },
   {
     title: "Organic Rose Facial Serum",
@@ -21,15 +22,15 @@ const offerings = [
       "Botanical nourishment crafted to support radiant, dewy-looking skin.",
     image: "/images/rose-serum.jpg",
     alt: "An amber glass dropper bottle of facial serum beside a fresh pink rose",
-    href: "/shop/botanical-facial-oil",
+    href: "/shop/organic-rose-facial-serum",
   },
   {
-    title: "Whipped Tallow Balm",
+    title: "Whipped Tallow Butter",
     description:
       "Rich ancestral skincare whipped soft and infused with botanical ingredients.",
     image: "/images/tallow-balm.jpg",
-    alt: "A hand holding an open tin of soft pink whipped tallow balm",
-    href: "/shop/whipped-grass-fed-tallow-balm",
+    alt: "A hand holding an open tin of soft whipped tallow butter",
+    href: "/shop/whipped-tallow-butter",
   },
 ];
 
@@ -267,6 +268,13 @@ export default function HomePage() {
               Inquire About Gatherings
             </ButtonLink>
           </div>
+        </div>
+      </section>
+
+      {/* Instagram */}
+      <section className="bg-cream py-20 sm:py-24">
+        <div className="container-luxe">
+          <InstagramCallout variant="banner" />
         </div>
       </section>
 

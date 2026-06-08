@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { ContactForm } from "@/components/marketing/ContactForm";
 import { NewsletterForm } from "@/components/marketing/NewsletterForm";
+import { InstagramCallout } from "@/components/marketing/InstagramCallout";
 import { BotanicalSprig } from "@/components/ui/Botanical";
 import { site } from "@/lib/site";
 
@@ -30,7 +31,7 @@ export default function ContactPage() {
               Send us a message
             </h2>
             <p className="mt-2 text-sm text-ink-soft">
-              We typically reply within 1-2 business days.
+              We typically respond within 1&ndash;3 business days.
             </p>
             <div className="mt-6">
               <ContactForm />
@@ -40,37 +41,23 @@ export default function ContactPage() {
           <div className="space-y-8">
             <div>
               <BotanicalSprig className="h-6 w-16 text-gold/70" />
-              <h3 className="mt-3 font-display text-xl text-emerald">Email</h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink-soft">
+                Questions about products, consultations, cacao, or botanical
+                wellness?
+              </p>
+              <h3 className="mt-4 font-display text-xl text-emerald">Email</h3>
               <a
                 href={`mailto:${site.email}`}
                 className="mt-1 block text-sm text-ink-soft hover:text-emerald"
               >
                 {site.email}
               </a>
+              <p className="mt-3 text-sm text-ink-soft">
+                We typically respond within 1&ndash;3 business days.
+              </p>
             </div>
 
-            <div>
-              <h3 className="font-display text-xl text-emerald">Studio</h3>
-              <p className="mt-1 text-sm text-ink-soft">{site.address}</p>
-              <p className="mt-1 text-xs text-ink-soft/70">By appointment only</p>
-            </div>
-
-            <div>
-              <h3 className="font-display text-xl text-emerald">Follow along</h3>
-              <div className="mt-2 flex gap-4">
-                {Object.entries(site.social).map(([name, url]) => (
-                  <a
-                    key={name}
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm capitalize text-ink-soft transition hover:text-emerald"
-                  >
-                    {name}
-                  </a>
-                ))}
-              </div>
-            </div>
+            <InstagramCallout />
 
             <div className="rounded-2xl bg-sage-soft/30 p-6">
               <h3 className="font-display text-lg text-emerald">

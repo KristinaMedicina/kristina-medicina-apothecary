@@ -23,12 +23,23 @@ export interface ProductFaq {
   answer: string;
 }
 
+/** A purchasable variant (size/scent) of a product. */
+export interface ProductVariant {
+  label: string;
+  price: number;
+  /** Stripe Payment Link for this specific variant. */
+  stripePaymentLink?: string;
+}
+
 export interface Product {
   slug: string;
   name: string;
   collection: CollectionSlug;
   size: string;
+  /** Base price (lowest variant price when variants exist). */
   price: number;
+  /** Optional size/scent variants with their own prices. */
+  variants?: ProductVariant[];
   /** Short description for cards. */
   description: string;
   /** Full description for the product detail page. */
