@@ -2,7 +2,6 @@ import type { Product } from "@/types";
 import { FAQAccordion } from "@/components/ui/FAQAccordion";
 import { Disclaimer } from "@/components/ui/Disclaimer";
 import { PurchaseButton } from "@/components/product/PurchaseButton";
-import { AddToCartButton } from "@/components/product/AddToCartButton";
 import { FDA_DISCLAIMER } from "@/lib/site";
 import { getSubscriptionTier } from "@/lib/products";
 
@@ -78,9 +77,8 @@ export function ProductDetailContent({ product }: { product: Product }) {
             </a>{" "}
             to be notified when recurring orders are live.
           </p>
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <PurchaseButton product={product} size="lg" className="sm:flex-1" />
-            <AddToCartButton product={product} size="lg" />
+          <div className="mt-6">
+            <PurchaseButton product={product} size="lg" className="w-full sm:w-auto" />
           </div>
         </section>
       )}

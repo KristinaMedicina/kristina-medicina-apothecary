@@ -6,7 +6,6 @@ import { ProductImage } from "@/components/product/ProductImage";
 import { ProductGrid } from "@/components/product/ProductGrid";
 import { ProductDetailContent } from "@/components/product/ProductDetailContent";
 import { PurchaseButton } from "@/components/product/PurchaseButton";
-import { AddToCartButton } from "@/components/product/AddToCartButton";
 import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import {
@@ -174,9 +173,8 @@ export default async function ProductPage({
                 </ul>
               </div>
             ) : (
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                <PurchaseButton product={product} size="lg" className="sm:flex-1" />
-                <AddToCartButton product={product} size="lg" />
+              <div className="mt-7">
+                <PurchaseButton product={product} size="lg" className="w-full sm:w-auto" />
               </div>
             )}
 

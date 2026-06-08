@@ -3,7 +3,6 @@ import type { Product } from "@/types";
 import { formatPrice } from "@/lib/format";
 import { ProductImage } from "@/components/product/ProductImage";
 import { PurchaseButton } from "@/components/product/PurchaseButton";
-import { AddToCartButton } from "@/components/product/AddToCartButton";
 import { ButtonLink } from "@/components/ui/Button";
 import { getCollection } from "@/lib/products";
 
@@ -64,10 +63,7 @@ export function ProductCard({ product }: { product: Product }) {
               View Options
             </ButtonLink>
           ) : (
-            <>
-              <PurchaseButton product={product} size="sm" />
-              <AddToCartButton product={product} size="sm" />
-            </>
+            <PurchaseButton product={product} size="sm" />
           )}
         </div>
       </div>
