@@ -71,6 +71,19 @@ export const integrations = {
     },
   },
 
+  /** MailerLite email capture — server-side subscribe via the connect API. */
+  mailerlite: {
+    apiKey: env("MAILERLITE_API_KEY"),
+    groupId: env("MAILERLITE_GROUP_ID"),
+    get enabled() {
+      return Boolean(this.apiKey && this.groupId);
+    },
+    /** True when partially configured (one value set but not the other). */
+    get partiallyConfigured() {
+      return Boolean(this.apiKey || this.groupId) && !this.enabled;
+    },
+  },
+
   /** Kit (ConvertKit) email capture — form embed or API forwarding. */
   kit: {
     formId: env("NEXT_PUBLIC_KIT_FORM_ID"),
