@@ -18,7 +18,7 @@ type Status = "idle" | "loading" | "success" | "error";
 
 /**
  * Newsletter capture — uses Kit embed when NEXT_PUBLIC_KIT_FORM_ID is set,
- * otherwise posts to /api/subscribe (Klaviyo or graceful dev fallback).
+ * otherwise posts to /api/subscribe (MailerLite).
  */
 export function NewsletterForm({
   variant = "light",

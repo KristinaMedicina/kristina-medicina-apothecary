@@ -74,13 +74,13 @@ export const integrations = {
   /** MailerLite email capture — server-side subscribe via the connect API. */
   mailerlite: {
     apiKey: env("MAILERLITE_API_KEY"),
-    groupId: env("MAILERLITE_GROUP_ID"),
+    groupName: env("MAILERLITE_GROUP_NAME"),
     get enabled() {
-      return Boolean(this.apiKey && this.groupId);
+      return Boolean(this.apiKey && this.groupName);
     },
     /** True when partially configured (one value set but not the other). */
     get partiallyConfigured() {
-      return Boolean(this.apiKey || this.groupId) && !this.enabled;
+      return Boolean(this.apiKey || this.groupName) && !this.enabled;
     },
   },
 
@@ -90,15 +90,6 @@ export const integrations = {
     apiSecret: env("KIT_API_SECRET"),
     get enabled() {
       return Boolean(this.formId || (this.apiSecret && this.formId));
-    },
-  },
-
-  klaviyo: {
-    publicApiKey: env("NEXT_PUBLIC_KLAVIYO_PUBLIC_KEY"),
-    listId: env("KLAVIYO_LIST_ID"),
-    privateApiKey: env("KLAVIYO_PRIVATE_KEY"),
-    get enabled() {
-      return Boolean(this.privateApiKey && this.listId);
     },
   },
 
