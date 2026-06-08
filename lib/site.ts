@@ -6,7 +6,7 @@ export const site = {
   url: "https://kristinamedicina.com",
   email: "kristinamedicinalove@gmail.com",
   social: {
-    instagram: "https://instagram.com/kristinamedicina",
+    instagram: "https://instagram.com/kristina.medicina",
     pinterest: "https://pinterest.com/kristinamedicina",
     tiktok: "https://tiktok.com/@kristinamedicina",
   },
