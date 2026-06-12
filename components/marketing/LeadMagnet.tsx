@@ -25,6 +25,8 @@ export function LeadMagnet({
             buttonLabel="Send My Guide"
             placeholder="Your best email"
             className="mt-6 max-w-md"
+            successMessage="Your guide is on its way. Please check your inbox."
+            errorMessage="Something went wrong. Please try again."
           />
         </div>
         <div className="relative hidden bg-sage-soft/40 lg:block">

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { integrations } from "@/config/integrations";
 import { cn } from "@/lib/format";
 
 interface NewsletterFormProps {
@@ -12,13 +11,18 @@ interface NewsletterFormProps {
   buttonLabel?: string;
   placeholder?: string;
   className?: string;
+  /** Shown only after a successful /api/subscribe response. */
+  successMessage?: string;
+  /** Shown when the API request fails. */
+  errorMessage?: string;
 }
 
 type Status = "idle" | "loading" | "success" | "error";
 
+const DEFAULT_ERROR = "Something went wrong. Please try again.";
+
 /**
- * Newsletter capture — uses Kit embed when NEXT_PUBLIC_KIT_FORM_ID is set,
- * otherwise posts to /api/subscribe (MailerLite).
+ * Newsletter capture — posts to /api/subscribe (MailerLite).
  */
 export function NewsletterForm({
   variant = "light",
@@ -26,16 +30,20 @@ export function NewsletterForm({
   buttonLabel = "Subscribe",
   placeholder = "Your email address",
   className,
+  successMessage,
+  errorMessage = DEFAULT_ERROR,
 }: NewsletterFormProps) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
 
-  const kitFormId = integrations.kit.formId;
-
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
+    if (status === "loading") return;
+
     setStatus("loading");
+    setMessage("");
+
     try {
       const res = await fetch("/api/subscribe", {
         method: "POST",
@@ -43,44 +51,21 @@ export function NewsletterForm({
         body: JSON.stringify({ email, source }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Something went wrong");
+      if (!res.ok) throw new Error(data.error || errorMessage);
       setStatus("success");
-      setMessage(data.message || "You're on the list. Check your inbox.");
-      setEmail("");
-    } catch (err) {
-      setStatus("error");
       setMessage(
-        err instanceof Error ? err.message : "Something went wrong. Try again.",
+        successMessage ||
+          data.message ||
+          "You're on the list. Check your inbox.",
       );
+      setEmail("");
+    } catch {
+      setStatus("error");
+      setMessage(errorMessage);
     }
   }
 
   const dark = variant === "dark";
-
-  if (kitFormId) {
-    return (
-      <div className={cn("w-full", className)}>
-        <div
-          data-kit-form-id={kitFormId}
-          className="kit-form-embed min-h-[120px] w-full"
-          aria-label="Newsletter signup"
-        />
-        <p
-          className={cn(
-            "mt-2 text-xs",
-            dark ? "text-cream/60" : "text-ink-soft/70",
-          )}
-        >
-          We respect your inbox. Unsubscribe anytime.
-        </p>
-        <noscript>
-          <p className={cn("mt-2 text-sm", dark ? "text-cream/80" : "text-ink-soft")}>
-            Enable JavaScript to subscribe, or email us at kristinamedicinalove@gmail.com.
-          </p>
-        </noscript>
-      </div>
-    );
-  }
 
   if (status === "success") {
     return (
@@ -114,8 +99,9 @@ export function NewsletterForm({
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder={placeholder}
+          disabled={status === "loading"}
           className={cn(
-            "w-full min-w-0 flex-1 rounded-full border px-5 py-3 text-sm outline-none transition focus:ring-2 focus:ring-gold",
+            "w-full min-w-0 flex-1 rounded-full border px-5 py-3 text-sm outline-none transition focus:ring-2 focus:ring-gold disabled:opacity-60",
             dark
               ? "border-cream/30 bg-cream/10 text-cream placeholder:text-cream/50"
               : "border-gold/30 bg-cream-50 text-ink placeholder:text-ink-soft/60",
